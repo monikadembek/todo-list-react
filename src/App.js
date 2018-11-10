@@ -1,25 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import AppHeader from './AppHeader';
+import TasksList from './TasksList';
 
-class App extends Component {
+class App extends React.Component {
+  
+  constructor() {
+    super();
+
+    this.state = {
+      tasks: ["bla", "second task"]
+    };
+  }
+
+  addNewTask = (task) => {
+    const tasksArr = [...this.state.tasks];
+    tasksArr.push(task);
+    this.setState({
+      tasks: tasksArr
+    });
+  };
+
+  deleteTask = (i) => {
+    let tasksArr = [...this.state.tasks];
+    tasksArr.splice(i,1);
+    this.setState({
+      tasks: tasksArr
+    });
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <AppHeader addNewTask={this.addNewTask}/>
+        <TasksList tasks={this.state.tasks} del={this.deleteTask}/>
       </div>
     );
   }
